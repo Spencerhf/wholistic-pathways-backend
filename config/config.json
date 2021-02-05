@@ -1,0 +1,16 @@
+{
+  "development": {
+    "username": "spencer",
+    "password": null,
+    "database": "wholistic_pathways",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "spencer",
+    "password": null,
+    "database": "wholistic_pathways",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
