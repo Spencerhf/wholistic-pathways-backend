@@ -1,13 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const cors = require('cors');
+const cors = require("cors");
 require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 8000;
 
-app.use(express.static(__dirname + 'public'));
+app.use(express.static(__dirname + "public"));
 
-app.use(cors())
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -21,21 +21,34 @@ var transporter = nodemailer.createTransport({
   },
 });
 
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin,X-Requested-With,Content-Type,Accept,content-type,application/json"
+  );
+  next();
+});
+
 app.post("/send", (req, res) => {
   var mailOptions = {
-    from: req.body.email,
     to: "haze4man@gmail.com",
-    subject: `Hello this is ${req.body.name}`,
-    text: `${req.body.message}, 
-    From, ${req.body.name}`,
+    from: req.body.email,
+    subject: req.body.email,
+    text: `Hello, this is ${req.body.name}
+    ${req.body.message}
+    Email me back at ${req.body.email}`
   };
 
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
       console.log(error);
     } else {
-      console.log("Email sent: " + info.response)
-      .then(res => res.status(200).send(res));
+      console
+        .log("Email sent: " + info.response)
+        .then((res) => res.status(200).send(res));
     }
   });
 });
