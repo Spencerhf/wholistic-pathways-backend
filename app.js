@@ -35,6 +35,10 @@ app.use(function(req, res, next) {
   }
 });
 
+app.get("/", (req, res) => {
+  res.send("hello");
+})
+
 app.post("/send", (req, res) => {
   var mailOptions = {
     to: "haze4man@gmail.com",
